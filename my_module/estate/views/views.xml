@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="c:\users\owner\documents\workspaceodoo14\my_module\estate.list">
+      <field name="name">C:\Users\Owner\Documents\workspaceodoo14\my_module\estate list</field>
+      <field name="model">c:\users\owner\documents\workspaceodoo14\my_module\estate.c:\users\owner\documents\workspaceodoo14\my_module\estate</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="c:\users\owner\documents\workspaceodoo14\my_module\estate.action_window">
+      <field name="name">C:\Users\Owner\Documents\workspaceodoo14\my_module\estate window</field>
+      <field name="res_model">c:\users\owner\documents\workspaceodoo14\my_module\estate.c:\users\owner\documents\workspaceodoo14\my_module\estate</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="c:\users\owner\documents\workspaceodoo14\my_module\estate.action_server">
+      <field name="name">C:\Users\Owner\Documents\workspaceodoo14\my_module\estate server</field>
+      <field name="model_id" ref="model_c:\users\owner\documents\workspaceodoo14\my_module\estate_c:\users\owner\documents\workspaceodoo14\my_module\estate"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="C:\Users\Owner\Documents\workspaceodoo14\my_module\estate" id="c:\users\owner\documents\workspaceodoo14\my_module\estate.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="c:\users\owner\documents\workspaceodoo14\my_module\estate.menu_1" parent="c:\users\owner\documents\workspaceodoo14\my_module\estate.menu_root"/>
+    <menuitem name="Menu 2" id="c:\users\owner\documents\workspaceodoo14\my_module\estate.menu_2" parent="c:\users\owner\documents\workspaceodoo14\my_module\estate.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="c:\users\owner\documents\workspaceodoo14\my_module\estate.menu_1_list" parent="c:\users\owner\documents\workspaceodoo14\my_module\estate.menu_1"
+              action="c:\users\owner\documents\workspaceodoo14\my_module\estate.action_window"/>
+    <menuitem name="Server to list" id="c:\users\owner\documents\workspaceodoo14\my_module\estate" parent="c:\users\owner\documents\workspaceodoo14\my_module\estate.menu_2"
+              action="c:\users\owner\documents\workspaceodoo14\my_module\estate.action_server"/>
+-->
+  </data>
+</odoo>
