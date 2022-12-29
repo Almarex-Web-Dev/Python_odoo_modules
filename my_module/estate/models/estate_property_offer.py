@@ -30,20 +30,20 @@ class EstatePropertyOffer(models.Model):
                 self.property_id.price = self.price
                 self.property_id.selling_price = self.price
             else:
-                self.property_id.buyer_id = ''
-                self.property_id.price = ''
-                self.property_id.selling_price = ''
                 raise ValidationError('''The Selling price must be at least 90% of the expected price. You must reduce
                 the expected price if you want to accept this offer''')
         else:
-            pass
+            self.property_id.buyer_id = ''
+            self.property_id.price = 0
+            self.property_id.selling_price = 0
 
     @api.depends("status")
     def refuse(self):
         self.status = "refuse"
-        if self.status == 'refuse':
-            pass
+        # if self.status == 'refuse':
+        #     self.property_id.state = 'new'
 
+    # Raise a validation error when a buyer provides a negative number value
     @api.constrains("price")
     def is_positive(self):
         for record in self:
@@ -51,24 +51,17 @@ class EstatePropertyOffer(models.Model):
                 raise ValidationError("Negative %s is not valid" % record.price)
 
     # When an offer is created, the state should switch to offer received
+    # @api.depends('property_id')
+    # @api.constrains('property_id')
     @api.model
     def create(self, vals):
-        # current_price = vals['price']
-        all_price = []
+        current_price = vals['price']
         prop_offer = self.env['estate.property'].browse(vals['property_id'])
-        for record in prop_offer:
-            if record == record.price:
-                all_price.append(record.price)
-        if len(all_price) > 2:
-            if all_price[-1] > all_price[-2]:
-                prop_offer.state = 'offer received'
-            elif all_price[-1] <= all_price[-2]:
-                raise ValidationError(f"Offer must be greater than {all_price[-1]}")
-            else:
-                prop_offer.state = 'new'
-                # print("Property Values", "Current price :", current_price, "state :", values.state, "prev price",  prev_price)
+        # check if current price is less than existing
+        print(prop_offer.best_price)
+        if current_price <= prop_offer.best_price:
+            # if the price is less, raise a validation error
+            raise ValidationError(f'Current price must be greater than existing price which is {prop_offer.best_price}')
         else:
-            pass
-
+            prop_offer.state = 'offer received'
         return super(EstatePropertyOffer, self).create(vals)
-

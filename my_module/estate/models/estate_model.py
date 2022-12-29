@@ -49,7 +49,7 @@ class EstateModel(models.Model):
     offers_ids = fields.One2many("estate.property.offers", 'property_id')
     total_area = fields.Integer(compute='_calc_total_', string='Total Area (sqm)')
     user_id = fields.Many2one('res.users', string='user offers')
-    best_price = fields.Float(string="Best offer", readonly=True)
+    best_price = fields.Integer(string="Best offer", readonly=True)
 
     # get all the price of an offers
     @api.depends('offers_ids')
@@ -58,14 +58,15 @@ class EstateModel(models.Model):
     def get_all_price(self):
         price_list = []
         for record in self:
-            # print("This is the record name", record.name)
-            # print("These are the offers price", record.offers_ids)
             for rec in record.offers_ids:
-                price_list.append(rec.price)
-                if len(price_list) > 0:
+                if rec.price:
+                    price_list.append(rec.price)
                     self.best_price = max(price_list)
+                elif not rec.price:
+                    self.best_price = len(price_list)
+                    self.state = 'new'
                 else:
-                    self.best_price = 0
+                    pass
 
     @api.depends("garden_area", "living_area")
     def _calc_total_(self):
@@ -91,23 +92,3 @@ class EstateModel(models.Model):
         if self.status == "cancel":
             raise ValidationError("Cancelled properties can not be sold")
 
-    # Try the method used for getting the max value
-    # @api.depends('offers_ids')
-    # @api.onchange('offers_ids')
-    # @api.constrains('offers_ids')
-    # def get_all_price(self):
-    #     price_list = []
-    #     for record in self:
-    #         # print("This is the record name", record.name)
-    #         # print("These are the offers price", record.offers_ids)
-    #         for rec in record.offers_ids:
-    #             if type(rec.price) == int:
-    #                 price_list.append(rec.price)
-    #                 self.best_price = max(price_list)
-    #             else:
-    #                 pass
-
-# print("These are the offer", vals)
-# value of the price coming from this model (estate.property.offer)
-# value of the price coming from estate.property model
-# print("Property Values", "Current price :", current_price, "state :", values.state, "prev price",  prev_price)

@@ -5,11 +5,12 @@
     'description': "This module was created by Abdullahi",
     'author': "Lasisi Abdullahi",
     'website': "http://www.yourcompany.com",
-    'category': 'Productivity',
+    'category': 'Real Estate/Brokerage',
     'sequence': -100,
     'version': '0.1',
     'depends': ['base'],
     'data': [
+        'security/security.xml',
         'security/ir.model.access.csv',
         'views/estate_model.xml',
         'views/estate_property_type.xml',
